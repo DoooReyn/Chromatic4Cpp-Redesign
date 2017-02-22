@@ -13,3 +13,5 @@
 - 新增 `sRGBFrame` 和 `sRGBAFrame` 数据结构，分别用于存储和处理 `RGB`，`RGBA` 各通道数据；
 - 新增 `HEX` 获取 `sRGBFrame` 和 `sRGBAFrame` 的接口；
 - 增加 `Chromatic4Cpp` 色彩空间的文档说明和部分注释；
+- 新增 `RGB` 类，用于处理 `RGB` 数据；
+- 新增 `RGB` 类构造部分的测试用例，详见[tests/TestCase_sRGB.cpp](https://github.com/DoooReyn/Chromatic4Cpp-Redesign/blob/master/tests/TestCase_sRGB.cpp)；
