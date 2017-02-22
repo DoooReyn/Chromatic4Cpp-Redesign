@@ -71,8 +71,10 @@ void TestCase1_HEX_ConvertHex() {
     hex.Dump(); // Hex='#FF123980' CheckMode='SkipInvalid' ChannelMode='4-Channel'
     
     PrintLine("\n");
-    PrintLine("================== 1-5 Hex && sRGBFrame ==================");
-    hex.Convert2sRGBFrame().DumpAlphaFloat(); // sRGB='255,18,57,0.502'
-    hex.Convert2sRGBFrame().DumpAsFloat(); // sRGB='1.000,0.071,0.224,0.502'
-    hex.SetChannelMode(eChannel3).Convert2sRGBFrame().Alpha(200).Dump(); // sRGB='255,18,57,200'
+    PrintLine("================== 1-5 Hex && sRGB(A)Frame ==================");
+    hex.Dump(); // Hex='#FF123980' CheckMode='SkipInvalid' ChannelMode='4-Channel'
+    hex.RGBFrame().Dump(); // Hex convert to sRGB='255,18,57'
+    hex.RGBFrame().DumpAsFloat(); // Hex convert to sRGB='1.000,0.071,0.224'
+    hex.SetChannelMode(eChannel4).RGBAFrame().Alpha(200).Dump(); // Hex convert to sRGBA='255,18,57,200'
+    hex.RGBAFrame().DumpAsFloat(); // Hex convert to sRGBA='1.000,0.071,0.224,0.502'
 }
