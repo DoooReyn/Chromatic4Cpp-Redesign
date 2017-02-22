@@ -19,6 +19,29 @@
 #include <map>
 using namespace std;
 
+/****************************************************************************************************************************************
+ * Chromatic4Cpp namespace definition
+ * Includes:
+ * - BaseTypes
+ * - HexColor
+ * - HelperUtils
+ * - DataFrame
+ *      - HexFrame      // completed 90%
+ *      - sRGBFrame     // completed 80%
+ *      - sRGBAFrame    // completed 80%
+ *      - ...           // on plan
+ * - ColorSpace
+ *      - HEX   // completed 90% ...
+ *      - RGB   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - RGBA  // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - CMYK  // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - HSL   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - HSV   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - HSB   // on plan
+ *      - YUV   // on plan
+ *      - LAB   // on plan
+ ****************************************************************************************************************************************/
+
 namespace Chromatic4Cpp {
     
     /* Base data types definition */
@@ -30,6 +53,7 @@ namespace Chromatic4Cpp {
             eCS_CMYK,
             eCS_HSL,
             eCS_HSV,
+            eCS_HSB,
             eCS_YUV,
             eCS_LAB,
         } ColorSpaceType;
@@ -272,6 +296,7 @@ namespace Chromatic4Cpp {
         };
         
         struct sRGBFrame {
+        public:
             RGBit r, g, b;
             sRGBFrame() { r = 0; g = 0; b = 0; }
             sRGBFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; }
@@ -298,10 +323,23 @@ namespace Chromatic4Cpp {
         };
         
         struct sRGBAFrame : public sRGBFrame {
+        public:
             RGBit a;
-            sRGBAFrame() { r = 0; g = 0; b = 0; a = 255; }
-            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; a = 0; }
-            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b, RGBit _a) { r = _r; g = _g; b = _b; a = _a; }
+            sRGBAFrame() {
+                sRGBFrame();
+                a = 255;
+            }
+            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b) {
+                sRGBFrame(_r, _g, _b);
+                a = 255;
+            }
+            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b, RGBit _a) {
+                sRGBFrame(_r, _g, _b);
+                a = _a;
+            }
+            int Red()   { return r; }
+            int Green() { return g; }
+            int Blue()  { return b; }
             int Alpha() { return a; }
             sRGBAFrame Red(RGBit _r)   { r = _r; return *this; }
             sRGBAFrame Green(RGBit _g) { g = _g; return *this; }
