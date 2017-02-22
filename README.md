@@ -6,7 +6,7 @@
 - 全新设计的 `Chromatic4Cpp` 色彩空间；
 - 新增十六进制数据结构；
 - 新增用于十六进制数据构造和转换的 `HEX` 类；
-- 新增 `HEX` 类的测试用例*(详见 [tests/TestCase_HEX.cpp](https://github.com/DoooReyn/Chromatic4Cpp-Redesign/blob/master/tests/TestCase_HEX.cpp))*；
+- 新增 `HEX` 类的测试用例，详见 [tests/TestCase_HEX.cpp](https://github.com/DoooReyn/Chromatic4Cpp-Redesign/blob/master/tests/TestCase_HEX.cpp)；
 - 及其他...
 
 **2017-02-23**
