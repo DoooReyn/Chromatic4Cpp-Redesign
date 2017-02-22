@@ -8,7 +8,9 @@
 
 #include <iostream>
 #include "TestCase_HEX.hpp"
+#include "TestCase_sRGB.hpp"
 
 int main(int argc, const char * argv[]) {
-    TestCase1_HEX_ConvertHex();
+//    TestCases_HEX();
+    TestCases_sRGB();
 }
