@@ -20,12 +20,13 @@
 using namespace std;
 
 namespace Chromatic4Cpp {
-    /* Base Types Definition */
+    
+    /* Base data types definition */
     namespace BaseTypes {
         typedef enum {
-            eCS_HEX,
-            eCS_RGB,
-            eCS_RGBA,
+            eCS_HEX,    //基本完成
+            eCS_RGB,    //计划中
+            eCS_RGBA,   //计划中
             eCS_CMYK,
             eCS_HSL,
             eCS_HSV,
@@ -52,6 +53,8 @@ namespace Chromatic4Cpp {
         #define RGBit  unsigned char
     }
     
+    
+    /* Hex colors definition as below */
     namespace HexColor {
         const HexStr INDIGO                = "4B0082";
         const HexStr GOLD                  = "FFD700";
@@ -203,7 +206,7 @@ namespace Chromatic4Cpp {
         const HexStr REBECCAPURPLE         = "663399";
     }
 
-    
+    /* Some functions to make Chromatic4Cpp useful and workable. */
     namespace HelperUtils  {
         using namespace BaseTypes;
         
@@ -217,14 +220,16 @@ namespace Chromatic4Cpp {
         unsigned char GetChannelModeSize(ChannelMode);
         void AutoFillHexStr(HexStr&, ChannelMode, const HexStr&);
         const char* GetChannelModeName(ChannelMode);
-        const char* GetCheckModeName(CheckMode mode);
-        HexBit UpperCaseChar(HexBit hex);
-        HexBit LowerCaseChar(HexBit hex);
-        void UpperCaseStr(HexStr& hex);
-        void LowerCaseStr(HexStr& hex);
-        unsigned long Hex2Number(const HexStr& hex);
+        const char* GetCheckModeName(CheckMode);
+        HexBit UpperCaseChar(HexBit);
+        HexBit LowerCaseChar(HexBit);
+        void UpperCaseStr(HexStr&);
+        void LowerCaseStr(HexStr&);
+        unsigned long Hex2Number(const HexStr&);
     }
     
+    
+    /* Some data structions definition, like Hex, RGB, RGBA, and so on. */
     namespace DataFrame {
         using namespace BaseTypes;
         using namespace HexColor;
@@ -267,36 +272,62 @@ namespace Chromatic4Cpp {
         };
         
         struct sRGBFrame {
-            RGBit r, g, b, a;
-            sRGBFrame() { r = 0; g = 0; b = 0; a = 255; }
-            sRGBFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; a = 0; }
-            sRGBFrame(RGBit _r, RGBit _g, RGBit _b, RGBit _a) { r = _r; g = _g; b = _b; a = _a; }
+            RGBit r, g, b;
+            sRGBFrame() { r = 0; g = 0; b = 0; }
+            sRGBFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; }
             int Red()   { return r; }
             int Green() { return g; }
             int Blue()  { return b; }
-            int Alpha() { return a; }
             sRGBFrame Red(RGBit _r)   { r = _r; return *this; }
             sRGBFrame Green(RGBit _g) { g = _g; return *this; }
             sRGBFrame Blue(RGBit _b)  { b = _b; return *this; }
-            sRGBFrame Alpha(RGBit _a) { a = _a; return *this; }
             sRGBFrame Dump() {
                 char txt[24];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGB='%d,%d,%d,%d'",r,g,b,a);
+                sprintf(txt, "sRGB='%d,%d,%d'",r,g,b);
                 PrintLine(txt);
                 return *this;
             }
             sRGBFrame DumpAsFloat() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGB='%.03f,%.3f,%.03f,%.03f'",r/255.f,g/255.f,b/255.f,a/255.f);
+                sprintf(txt, "sRGB='%.03f,%.3f,%.03f'",r/255.f,g/255.f,b/255.f);
+                PrintLine(txt);
+                return *this;
+            }
+        };
+        
+        struct sRGBAFrame : public sRGBFrame {
+            RGBit a;
+            sRGBAFrame() { r = 0; g = 0; b = 0; a = 255; }
+            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; a = 0; }
+            sRGBAFrame(RGBit _r, RGBit _g, RGBit _b, RGBit _a) { r = _r; g = _g; b = _b; a = _a; }
+            int Alpha() { return a; }
+            sRGBAFrame Red(RGBit _r)   { r = _r; return *this; }
+            sRGBAFrame Green(RGBit _g) { g = _g; return *this; }
+            sRGBAFrame Blue(RGBit _b)  { b = _b; return *this; }
+            sRGBAFrame Alpha(RGBit _a) { a = _a; return *this; }
+            sRGBAFrame Dump() {
+                char txt[24];
+                memset(txt, 0, sizeof(txt));
+                sprintf(txt, "sRGBA='%d,%d,%d,%d'",
+                        r,g,b,a);
+                PrintLine(txt);
+                return *this;
+            }
+            sRGBFrame DumpAsFloat() {
+                char txt[64];
+                memset(txt, 0, sizeof(txt));
+                sprintf(txt, "sRGBA='%.03f,%.3f,%.03f,%.03f'",
+                        r/255.f,g/255.f,b/255.f,a/255.f);
                 PrintLine(txt);
                 return *this;
             }
             sRGBFrame DumpAlphaFloat() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGB='%d,%d,%d,%.03f'",r,g,b,a/255.f);
+                sprintf(txt, "sRGBA='%d,%d,%d,%.03f'",
+                        r,g,b,a/255.f);
                 PrintLine(txt);
                 return *this;
             }
@@ -337,7 +368,8 @@ namespace Chromatic4Cpp {
             HEX SetCheckMode(CheckMode mode);
             
             int GetChannelDecNum(HexBit channel);
-            sRGBFrame Convert2sRGBFrame();
+            sRGBFrame RGBFrame();
+            sRGBAFrame RGBAFrame();
             
         private:
             void _Set(HexStr hex);

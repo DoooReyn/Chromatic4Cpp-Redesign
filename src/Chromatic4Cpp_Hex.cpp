@@ -113,12 +113,19 @@ int HEX::GetChannelDecNum(HexBit channel) {
     return (int)Hex2Number(_hexFrame.hex.substr((channel-1)*2, 2));
 }
 
-sRGBFrame HEX::Convert2sRGBFrame() {
+sRGBFrame HEX::RGBFrame() {
     sRGBFrame frame;
+    frame.r = GetChannelDecNum(1);
+    frame.g = GetChannelDecNum(2);
+    frame.b = GetChannelDecNum(3);
+    return frame;
+}
+
+sRGBAFrame HEX::RGBAFrame() {
+    sRGBAFrame frame;
     frame.r = GetChannelDecNum(1);
     frame.g = GetChannelDecNum(2);
     frame.b = GetChannelDecNum(3);
     frame.a = GetChannelDecNum(4);
     return frame;
 }
-    
