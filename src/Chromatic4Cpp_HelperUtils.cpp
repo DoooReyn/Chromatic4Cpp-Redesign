@@ -19,20 +19,30 @@ using namespace std;
  * HellperUtils Implementation
  ****************************************************************************************************************************************/
 
-const char* HelperUtils::GetChannelModeName(ChannelMode mode) {
-    if(mode == eChannel3)
+const char* HelperUtils::GetChannelModeName(ChannelNumMode mode) {
+    if(mode == eChannelNumMode3)
         return "3-Channel";
     else
         return "4-Channel";
 }
 
-const char* HelperUtils::GetCheckModeName(CheckMode mode) {
-    if(mode == eAutoConvert)
+const char* HelperUtils::GetCheckModeName(HexCheckMode mode) {
+    if(mode == eHexCheckModeAutoConvert)
         return "AutoConvert";
-    else if(mode == eSkipInvalid)
+    else if(mode == eHexCheckModeSkipInvalid)
         return "SkipInvalid";
     else
         return "Strict";
+}
+
+const char* HelperUtils::GetChannelInputModeName(RGBAChannelInputMode mode) {
+    if(mode == eRGBAChannelInputModeInteger) {
+        return "Integer";
+    } else if(mode == eRGBAChannelInputModeFloat) {
+        return "Float";
+    } else {
+        return "AlphaFloat";
+    }
 }
 
 HexStr HelperUtils::AutoConvertHexStr(const HexStr& hex) {
@@ -70,11 +80,11 @@ bool HelperUtils::StrictCheckHexStr(const HexStr& hex) {
     return true;
 }
 
-unsigned char HelperUtils::GetChannelModeSize(DataFrame::ChannelMode mode) {
-    return mode == eChannel3 ? 6 : 8;
+unsigned char HelperUtils::GetChannelModeSize(ChannelNumMode mode) {
+    return mode == eChannelNumMode3 ? 6 : 8;
 }
 
-void HelperUtils::AutoFillHexStr(HexStr& hex, DataFrame::ChannelMode mode, const HexStr& c) {
+void HelperUtils::AutoFillHexStr(HexStr& hex, ChannelNumMode mode, const HexStr& c) {
     int modesize = GetChannelModeSize(mode);
     long fillsize = hex.size() - modesize;
     if(fillsize >= 0) {

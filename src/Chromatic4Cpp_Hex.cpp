@@ -19,26 +19,25 @@ using namespace BaseTypes;
  * HEX ColorSpace Implementation
  ****************************************************************************************************************************************/
 
-HEX::HEX() {
-}
+HEX::HEX() {}
 
 HEX::HEX(HexStr hex) {
     Set(hex);
 }
 
-HEX::HEX(HexStr hex, ChannelMode mode) {
+HEX::HEX(HexStr hex, ChannelNumMode mode) {
     _hexFrame.channelMode = mode;
-    _hexFrame.checkMode   = eAutoConvert;
+    _hexFrame.checkMode   = eHexCheckModeAutoConvert;
     Set(hex);
 }
 
-HEX::HEX(HexStr hex, CheckMode mode) {
+HEX::HEX(HexStr hex, HexCheckMode mode) {
     _hexFrame.checkMode   = mode;
-    _hexFrame.channelMode = eChannel3;
+    _hexFrame.channelMode = eChannelNumMode3;
     Set(hex);
 }
 
-HEX::HEX(HexStr hex, ChannelMode channel, CheckMode check) {
+HEX::HEX(HexStr hex, ChannelNumMode channel, HexCheckMode check) {
     _hexFrame.checkMode   = check;
     _hexFrame.channelMode = channel;
     Set(hex);
@@ -59,13 +58,13 @@ HexStr HEX::Get() {
 
 HEX HEX::Set(HexStr hex) {
     switch (_hexFrame.checkMode) {
-        case eAutoConvert:
+        case eHexCheckModeAutoConvert:
             _Set(AutoConvertHexStr(hex));
             break;
-        case eSkipInvalid:
+        case eHexCheckModeSkipInvalid:
             _Set(SkipInvalidHexStr(hex));
             break;
-        case eStrictCheck:
+        case eHexCheckModeStrictCheck:
             StrictCheckHexStr(hex);
         default:
             break;
@@ -88,21 +87,21 @@ void HEX::_Set(HexStr hex) {
     _hexFrame.hex = hex;
 }
 
-ChannelMode HEX::GetChannelMode() {
+ChannelNumMode HEX::GetChannelMode() {
     return _hexFrame.channelMode;
 }
 
-HEX HEX::SetChannelMode(ChannelMode mode) {
+HEX HEX::SetChannelMode(ChannelNumMode mode) {
     _hexFrame.channelMode = mode;
     Set(_hexFrame.hex);
     return *this;
 }
 
-CheckMode HEX::GetCheckMode() {
+HexCheckMode HEX::GetCheckMode() {
     return _hexFrame.checkMode;
 }
 
-HEX HEX::SetCheckMode(CheckMode mode) {
+HEX HEX::SetCheckMode(HexCheckMode mode) {
     _hexFrame.checkMode = mode;
     Set(_hexFrame.hex);
     return *this;

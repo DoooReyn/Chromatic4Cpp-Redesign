@@ -59,22 +59,28 @@ namespace Chromatic4Cpp {
         } ColorSpaceType;
         
         typedef enum {
-            eChannel3,  // 3 channel (as default, like RGB)
-            eChannel4,  // 4 channel (like RGBA)
-        } ChannelMode;
+            eChannelNumMode3,  // 3 channel (as default, like RGB)
+            eChannelNumMode4,  // 4 channel (like RGBA)
+        } ChannelNumMode;
         
         typedef enum {
-            eAutoConvert, // auto convert to valid char
-            eSkipInvalid, // skip invalid char
-            eStrictCheck, // would fail
-        } CheckMode;
+            eHexCheckModeAutoConvert, // auto convert to valid char
+            eHexCheckModeSkipInvalid, // skip invalid char
+            eHexCheckModeStrictCheck, // would fail
+        } HexCheckMode;
         
+        typedef enum {
+            eRGBAChannelInputModeInteger,
+            eRGBAChannelInputModeFloat,
+            eRGBAChannelInputModeAlphaFloat,
+        } RGBAChannelInputMode;
         
         /* Macro definitions for base data type */
         #define CStr   const char*
         #define HexStr std::string
         #define HexBit unsigned char
         #define RGBit  unsigned char
+        #define RGBitf float
     }
     
     
@@ -241,10 +247,11 @@ namespace Chromatic4Cpp {
         HexStr AutoConvertHexStr(const HexStr&);
         HexStr SkipInvalidHexStr(const HexStr&);
         bool StrictCheckHexStr(const HexStr&);
-        unsigned char GetChannelModeSize(ChannelMode);
-        void AutoFillHexStr(HexStr&, ChannelMode, const HexStr&);
-        const char* GetChannelModeName(ChannelMode);
-        const char* GetCheckModeName(CheckMode);
+        unsigned char GetChannelModeSize(ChannelNumMode);
+        void AutoFillHexStr(HexStr&, ChannelNumMode, const HexStr&);
+        const char* GetChannelModeName(ChannelNumMode);
+        const char* GetCheckModeName(HexCheckMode);
+        const char* GetChannelInputModeName(RGBAChannelInputMode);
         HexBit UpperCaseChar(HexBit);
         HexBit LowerCaseChar(HexBit);
         void UpperCaseStr(HexStr&);
@@ -261,16 +268,16 @@ namespace Chromatic4Cpp {
         
         struct HexFrame {
             HexStr hex;
-            ChannelMode channelMode;
-            CheckMode checkMode;
+            ChannelNumMode channelMode;
+            HexCheckMode checkMode;
             
             HexFrame() {
                 hex = BLACK;
-                channelMode = eChannel3;
-                checkMode = eAutoConvert;
+                channelMode = eChannelNumMode3;
+                checkMode = eHexCheckModeAutoConvert;
             }
             
-            HexFrame(HexStr _hex, ChannelMode _channelMode, CheckMode _checkMode ) {
+            HexFrame(HexStr _hex, ChannelNumMode _channelMode, HexCheckMode _checkMode ) {
                 hex = _hex;
                 channelMode = _channelMode;
                 checkMode = _checkMode;
@@ -298,8 +305,12 @@ namespace Chromatic4Cpp {
         struct sRGBFrame {
         public:
             RGBit r, g, b;
-            sRGBFrame() { r = 0; g = 0; b = 0; }
-            sRGBFrame(RGBit _r, RGBit _g, RGBit _b) { r = _r; g = _g; b = _b; }
+            RGBAChannelInputMode inputMode;
+            
+            sRGBFrame()
+            { r = 0; g = 0; b = 0; inputMode=eRGBAChannelInputModeInteger; }
+            sRGBFrame(RGBit _r, RGBit _g, RGBit _b, RGBAChannelInputMode _input=eRGBAChannelInputModeInteger)
+            { r = _r; g = _g; b = _b; CheckInputMode(_input); }
             int Red()   { return r; }
             int Green() { return g; }
             int Blue()  { return b; }
@@ -307,18 +318,29 @@ namespace Chromatic4Cpp {
             sRGBFrame Green(RGBit _g) { g = _g; return *this; }
             sRGBFrame Blue(RGBit _b)  { b = _b; return *this; }
             sRGBFrame Dump() {
-                char txt[24];
+                char txt[64];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGB='%d,%d,%d'",r,g,b);
+                sprintf(txt, "sRGB='%d,%d,%d' InputMode='%s'",
+                        r, g, b,
+                        GetChannelInputModeName(inputMode));
                 PrintLine(txt);
                 return *this;
             }
             sRGBFrame DumpAsFloat() {
-                char txt[64];
+                char txt[96];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGB='%.03f,%.3f,%.03f'",r/255.f,g/255.f,b/255.f);
+                sprintf(txt, "sRGB='%.03f,%.3f,%.03f' InputMode='%s'",
+                        r/255.f,g/255.f,b/255.f,
+                        GetChannelInputModeName(inputMode));
                 PrintLine(txt);
                 return *this;
+            }
+            
+            void CheckInputMode(RGBAChannelInputMode mode) {
+                if(inputMode == eRGBAChannelInputModeAlphaFloat)
+                    inputMode = eRGBAChannelInputModeFloat;
+                else
+                    inputMode = mode;
             }
         };
         
@@ -346,26 +368,29 @@ namespace Chromatic4Cpp {
             sRGBAFrame Blue(RGBit _b)  { b = _b; return *this; }
             sRGBAFrame Alpha(RGBit _a) { a = _a; return *this; }
             sRGBAFrame Dump() {
-                char txt[24];
+                char txt[64];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGBA='%d,%d,%d,%d'",
-                        r,g,b,a);
+                sprintf(txt, "sRGBA='%d,%d,%d,%d' InputMode='%s'",
+                        r,g,b,a,
+                        GetChannelInputModeName(inputMode));
                 PrintLine(txt);
                 return *this;
             }
             sRGBFrame DumpAsFloat() {
-                char txt[64];
+                char txt[96];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGBA='%.03f,%.3f,%.03f,%.03f'",
-                        r/255.f,g/255.f,b/255.f,a/255.f);
+                sprintf(txt, "sRGBA='%.03f,%.3f,%.03f,%.03f' InputMode='%s'",
+                        r/255.f,g/255.f,b/255.f,a/255.f,
+                        GetChannelInputModeName(inputMode));
                 PrintLine(txt);
                 return *this;
             }
             sRGBFrame DumpAlphaFloat() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
-                sprintf(txt, "sRGBA='%d,%d,%d,%.03f'",
-                        r,g,b,a/255.f);
+                sprintf(txt, "sRGBA='%d,%d,%d,%.03f' InputMode='%s'",
+                        r,g,b,a/255.f,
+                        GetChannelInputModeName(inputMode));
                 PrintLine(txt);
                 return *this;
             }
@@ -387,9 +412,9 @@ namespace Chromatic4Cpp {
         public:
             HEX();
             HEX(HexStr);
-            HEX(HexStr, ChannelMode);
-            HEX(HexStr, CheckMode);
-            HEX(HexStr, ChannelMode, CheckMode);
+            HEX(HexStr, ChannelNumMode);
+            HEX(HexStr, HexCheckMode);
+            HEX(HexStr, ChannelNumMode, HexCheckMode);
             HEX(HexFrame& other);
             
             HEX Dump();
@@ -399,11 +424,11 @@ namespace Chromatic4Cpp {
             HexFrame GetHexFrame();
             HEX SetHexFrame(HexFrame& other);
 
-            ChannelMode GetChannelMode();
-            HEX SetChannelMode(ChannelMode mode);
+            ChannelNumMode GetChannelMode();
+            HEX SetChannelMode(ChannelNumMode mode);
             
-            CheckMode GetCheckMode();
-            HEX SetCheckMode(CheckMode mode);
+            HexCheckMode GetCheckMode();
+            HEX SetCheckMode(HexCheckMode mode);
             
             int GetChannelDecNum(HexBit channel);
             sRGBFrame RGBFrame();
@@ -411,10 +436,29 @@ namespace Chromatic4Cpp {
             
         private:
             void _Set(HexStr hex);
-            
-            
         };
-        struct RGB;
+        
+        
+        class RGB {
+        private:
+            sRGBFrame _frame;
+        public:
+            RGB();
+            RGB(RGBit, RGBit, RGBit, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
+            RGB(HexStr, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
+            RGB(HEX, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
+            RGB(sRGBFrame);
+            
+            RGB Set(sRGBFrame);
+            RGB Set(RGBit, RGBit, RGBit);
+            RGB Dump();
+            RGBAChannelInputMode GetChannelInputMode();
+            RGB SetChannelInputMode(RGBAChannelInputMode);
+        private:
+            void _Set(sRGBFrame);
+        };
+        
+        
         struct RGBA;
         struct CMYK;
         struct HSL;
