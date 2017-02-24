@@ -32,6 +32,42 @@ void TestCase1_sRGB_Constructor() {
     RGB(SANDYBROWN, eRGBAChannelInputModeInteger).Dump(); // sRGB='244,164,96' InputMode='Integer'
 }
 
+void TestCase2_sRGB_InputMode() {
+    PrintLine("\n");
+    PrintLine("================== 1-2 Channel Input Mode ==================");
+    PrintLine("This mode controls the output of RGB class.");
+    PrintLine("There are 3 modes: Integer, Float, AlphaFloat(Used by RGBA)");
+    PrintLine("\t1. Integer mode");
+    RGB(KHAKI, eRGBAChannelInputModeInteger).Dump(); // sRGB='240,230,140' InputMode='Integer'
+    PrintLine("\t2. Float Mode");
+    RGB(KHAKI, eRGBAChannelInputModeFloat).Dump(); // sRGB='0.941,0.902,0.549' InputMode='Float'
+    PrintLine("\t3. AlphaFloat Mode, will be considered as Integer Mode.");
+    RGB(KHAKI, eRGBAChannelInputModeAlphaFloat).Dump(); // sRGB='240,230,140' InputMode='Integer'
+}
+
+void TestCase3_sRGB_sFrame() {
+    // sRGB='221,160,221' InputMode='Integer'
+    // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
+}
+
+
+void TestCase4_sRGB_AsHEX() {
+    PrintLine("\n");
+    PrintLine("================== 1-4 RGB As Hex ==================");
+    PrintLine("RGB(PLUM)'s rgb data :");
+    RGB rgb = RGB(PLUM).Dump(); // sRGB='221,160,221' InputMode='Integer'
+    PrintLine("RGB(PLUM)'s hex string :");
+    const HexStr hexStr = rgb.GetHexStr();
+    PrintLine(hexStr); // sRGB='221,160,221' InputMode='Integer'
+    PrintLine("RGB(PLUM) as HEX class :");
+    rgb.Dump().AsHEX().Dump(); // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
+    PrintLine("Use HexStr to generate a HEX class :");
+    HEX(hexStr).Dump(); // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
+}
+
 void TestCases_sRGB() {
     TestCase1_sRGB_Constructor();
+    TestCase2_sRGB_InputMode();
+    TestCase3_sRGB_sFrame();
+    TestCase4_sRGB_AsHEX();
 }
