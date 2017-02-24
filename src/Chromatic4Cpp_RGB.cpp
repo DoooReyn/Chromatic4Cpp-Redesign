@@ -54,10 +54,10 @@ void RGB::_Set(sRGBFrame frame) {
 }
 
 RGB RGB::Dump() {
-    if(_frame.inputMode == eRGBAChannelInputModeInteger)
-        _frame.Dump();
-    else
+    if(_frame.inputMode == eRGBAChannelInputModeFloat)
         _frame.DumpAsFloat();
+    else
+        _frame.Dump();
     return *this;
 }
 
@@ -68,4 +68,17 @@ RGB RGB::SetChannelInputMode(RGBAChannelInputMode mode) {
 
 RGBAChannelInputMode RGB::GetChannelInputMode() {
     return _frame.inputMode;
+}
+
+const HexStr RGB::GetHexStr() {
+    HexStr ret;
+    ret.clear();
+    ret.append(Number2Hex(_frame.Red()));
+    ret.append(Number2Hex(_frame.Green()));
+    ret.append(Number2Hex(_frame.Blue()));
+    return ret;
+}
+
+HEX RGB::AsHEX() {
+    return HEX(GetHexStr());
 }

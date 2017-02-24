@@ -257,6 +257,7 @@ namespace Chromatic4Cpp {
         void UpperCaseStr(HexStr&);
         void LowerCaseStr(HexStr&);
         unsigned long Hex2Number(const HexStr&);
+        const HexStr Number2Hex(int);
     }
     
     
@@ -337,10 +338,12 @@ namespace Chromatic4Cpp {
             }
             
             void CheckInputMode(RGBAChannelInputMode mode) {
-                if(inputMode == eRGBAChannelInputModeAlphaFloat)
-                    inputMode = eRGBAChannelInputModeFloat;
-                else
+                if(inputMode == eRGBAChannelInputModeAlphaFloat) {
+                    PrintLine("!!!warning: 'AlphaFloat Mode' is not compatible for RGB, so it will not work.");
+                    inputMode = eRGBAChannelInputModeInteger;
+                } else {
                     inputMode = mode;
+                }
             }
         };
         
@@ -454,6 +457,9 @@ namespace Chromatic4Cpp {
             RGB Dump();
             RGBAChannelInputMode GetChannelInputMode();
             RGB SetChannelInputMode(RGBAChannelInputMode);
+            
+            HEX AsHEX();
+            const HexStr GetHexStr();
         private:
             void _Set(sRGBFrame);
         };

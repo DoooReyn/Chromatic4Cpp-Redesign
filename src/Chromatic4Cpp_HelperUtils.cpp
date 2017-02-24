@@ -7,6 +7,7 @@
 //
 
 #include "Chromatic4Cpp.hpp"
+#include "stdio.h"
 
 using namespace Chromatic4Cpp;
 using namespace HelperUtils;
@@ -127,3 +128,12 @@ unsigned long HelperUtils::Hex2Number(const HexStr& hex) {
     sscanf(hex.c_str(), "%x", &num);
     return num;
 }
+
+
+const HexStr HelperUtils::Number2Hex(int num) {
+    char txt[6];
+    memset(txt, 0, sizeof(txt));
+    sprintf(txt, "%x", num);
+    return txt;
+}
+
