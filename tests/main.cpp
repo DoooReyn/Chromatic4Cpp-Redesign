@@ -12,6 +12,7 @@
 #include "TestCase_CMYK.hpp"
 #include "TestCase_HSL.hpp"
 #include "TestCase_HSV.hpp"
+#include "TestCase_Color.hpp"
 
 int main(int argc, const char * argv[]) {
     TestCases_HEX();
@@ -20,4 +21,5 @@ int main(int argc, const char * argv[]) {
     TestCase_CMYK();
     TestCase_HSL();
     TestCase_HSV();
+    TestCase_Color();
 }
