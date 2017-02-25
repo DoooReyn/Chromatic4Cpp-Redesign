@@ -17,6 +17,7 @@ using namespace std;
 
 
 void TestCase1_HEX_Constructor() {
+    PrintLine("\n");
     PrintLine("================== 1-1 Constructor ==================");
     PrintLine("To get a HEX data, u can use constructors as below:");
     PrintLine("\t1. with no arguments as default");
@@ -89,6 +90,7 @@ void TestCase5_HEX_sRGB_A_Frame() {
 }
 
 void TestCases_HEX() {
+    PrintLine("****************** HEX Class TestCases ******************");
     TestCase1_HEX_Constructor();
     TestCase2_HEX_ChannelMode();
     TestCase3_HEX_CheckMode();

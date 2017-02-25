@@ -78,6 +78,8 @@ void TestCase4_sRGB_AsHEX() {
 }
 
 void TestCases_sRGB() {
+    PrintLine("\n");
+    PrintLine("******************  RGB Class TestCases ****************** ");
     TestCase1_sRGB_Constructor();
     TestCase2_sRGB_InputMode();
     TestCase3_sRGB_sFrame();
