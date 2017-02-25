@@ -42,7 +42,7 @@
 #include "Chromatic4Cpp_RGBA.hpp"
 #include "Chromatic4Cpp_CMYK.hpp"
 #include "Chromatic4Cpp_HSL.hpp"
-//#include "Chromatic4Cpp_HSV.hpp"
+#include "Chromatic4Cpp_HSV.hpp"
 
 using namespace std;
 using namespace HexColor;

@@ -1,4 +1,4 @@
-//
+
 //  Chromatic4Cpp_RGBA.hpp
 //  SomethingMustBeWrong
 //

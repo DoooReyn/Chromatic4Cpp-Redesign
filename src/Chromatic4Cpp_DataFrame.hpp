@@ -329,4 +329,72 @@ public:
     }
 };
 
+
+struct HSVFrame {
+public:
+    HueBit h;
+    HSVBit s, v;
+    const static HueBit HUE_MIN = 0;
+    const static HueBit HUE_MAX = 359;
+    static constexpr HSVBit HSV_MIN = 0.000f;
+    static constexpr HSVBit HSV_MAX = 1.000f;
+    
+public:
+    HSVFrame() {
+        h = HUE_MIN;
+        s = v = HSV_MIN;
+    }
+    
+    HSVFrame(HueBit _h, HSVBit _s, HSVBit _l) {
+        Set(_h, _s, _l);
+    }
+    
+public:
+    HueBit Hue()        { return h; }
+    HSVBit Saturation() { return s; }
+    HSVBit Value()      { return v; }
+    
+    HSVFrame& Hue(HueBit bit)        { h = CheckHueBit(bit); return *this; }
+    HSVFrame& Saturation(HSVBit bit) { s = CheckHSVBit(bit); return *this; }
+    HSVFrame& Value(HSVBit bit)      { v = CheckHSVBit(bit); return *this; }
+    
+    HSVFrame& Set(HueBit _h, HSVBit _s, HSVBit _v) {
+        h = CheckHueBit(_h);
+        s = CheckHSVBit(_s);
+        v = CheckHSVBit(_v);
+        return *this;
+    }
+    
+    HSVFrame& Dump() {
+        char txt[32];
+        memset(txt, 0, sizeof(txt));
+        sprintf(txt, "HSV:%03d,%.03f,%.03f", h, s, v);
+        PrintLine(txt);
+        return *this;
+    }
+    
+    HSVFrame Clone() {
+        return HSVFrame(h, s, v);
+    }
+    
+    HSVFrame& Random() {
+        setrandomseed();
+        h = randomAB(HUE_MIN, HUE_MAX);
+        s = random01();
+        v = random01();
+        return *this;
+    }
+    
+    static HueBit CheckHueBit(HueBit bit) {
+        if(bit < HUE_MIN) return HUE_MIN;
+        if(bit > HUE_MAX) return HUE_MAX;
+        return bit;
+    }
+    
+    static HSLBit CheckHSVBit(HSVBit bit) {
+        if(bit < HSV_MIN) return HSV_MIN;
+        if(bit > HSV_MAX) return HSV_MAX;
+        return bit;
+    }
+};
 #endif /* Chromatic4Cpp_DataFrame_hpp */
