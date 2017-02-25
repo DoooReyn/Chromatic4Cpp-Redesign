@@ -51,6 +51,16 @@ public:
         PrintLine(txt);
         return *this;
     }
+    
+    HexFrame& Random() {
+        hex.clear();
+        setrandomseed();
+        hex.append(HelperUtils::Number2Hex(randomAB(RGB_MIN, RGB_MAX)));
+        hex.append(HelperUtils::Number2Hex(randomAB(RGB_MIN, RGB_MAX)));
+        hex.append(HelperUtils::Number2Hex(randomAB(RGB_MIN, RGB_MAX)));
+        HelperUtils::AutoFillHexStr(hex, eChannelNumMode3, "0");
+        return *this;
+    }
 };
 
 struct sRGBFrame {
@@ -107,6 +117,14 @@ public:
                 HelperUtils::GetChannelInputModeName(inputMode)
                 );
         PrintLine(txt);
+        return *this;
+    }
+    
+    sRGBFrame& Random() {
+        setrandomseed();
+        r = randomAB(RGB_MIN, RGB_MAX);
+        g = randomAB(RGB_MIN, RGB_MAX);
+        b = randomAB(RGB_MIN, RGB_MAX);
         return *this;
     }
     
@@ -197,6 +215,15 @@ public:
                 HelperUtils::GetChannelInputModeName(inputMode)
                 );
         PrintLine(txt);
+        return *this;
+    }
+    
+    sRGBAFrame& Random() {
+        setrandomseed();
+        r = randomAB(RGB_MIN, RGB_MAX);
+        g = randomAB(RGB_MIN, RGB_MAX);
+        b = randomAB(RGB_MIN, RGB_MAX);
+        a = randomAB(RGB_MIN, RGB_MAX);
         return *this;
     }
 };

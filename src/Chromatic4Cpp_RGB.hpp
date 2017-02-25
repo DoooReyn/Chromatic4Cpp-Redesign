@@ -88,6 +88,11 @@ public:
         return *this;
     }
     
+    RGB& Random () {
+        _frame.Random();
+        return *this;
+    }
+    
     HEX AsHEX() {
         return HEX(HexString());
     }

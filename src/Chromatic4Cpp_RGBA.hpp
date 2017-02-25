@@ -98,6 +98,11 @@ public:
         return *this;
     }
     
+    RGBA& Random () {
+        _frame.Random();
+        return *this;
+    }
+    
     HEX AsHEX() {
         return HEX(HexString(), eChannelNumMode4);
     }
