@@ -17,7 +17,6 @@
 
 class RGB {
 private:
-    HexStr _hex;
     sRGBFrame _frame;
 public:
     RGB() {
@@ -48,10 +47,15 @@ public:
     
 public:
     int Red()   { return _frame.Red(); }
+    
     int Green() { return _frame.Green(); }
+    
     int Blue()  { return _frame.Blue(); }
+    
     RGB& Red(RGBit r)   { _frame.Red(r); return *this; }
+    
     RGB& Green(RGBit g) { _frame.Green(g); return *this; }
+    
     RGB& Blue(RGBit b)  { _frame.Blue(b); return *this; }
     
     RGB& Set(sRGBFrame& frame) {
@@ -93,12 +97,17 @@ public:
         ret.append(HelperUtils::Number2Hex(_frame.Red()));
         ret.append(HelperUtils::Number2Hex(_frame.Green()));
         ret.append(HelperUtils::Number2Hex(_frame.Blue()));
+        HelperUtils::AutoFillHexStr(ret, eChannelNumMode3, "0");
         return ret;
     }
+    
 private:
     void _Set(sRGBFrame& frame) {
         frame.CheckInputMode(frame.inputMode);
-        _frame = frame;
+        _frame.Red(frame.Red());
+        _frame.Green(frame.Green());
+        _frame.Blue(frame.Blue());
+        _frame.inputMode = frame.inputMode;
     }
 };
 

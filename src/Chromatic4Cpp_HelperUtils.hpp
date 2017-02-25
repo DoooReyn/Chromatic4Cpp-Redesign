@@ -96,12 +96,12 @@ public:
     }
     
     static const char* GetChannelInputModeName(RGBAChannelInputMode mode) {
-        if(mode == eHexCheckModeAutoConvert)
-            return "AutoConvert";
-        else if(mode == eHexCheckModeSkipInvalid)
-            return "SkipInvalid";
+        if(mode == eRGBAChannelInputModeInteger)
+            return "Integer";
+        else if(mode == eRGBAChannelInputModeFloat)
+            return "Float";
         else
-            return "Strict";
+            return "AlphaFloat";
     }
     
     static HexBit UpperCaseChar(HexBit hex) {
@@ -135,7 +135,9 @@ public:
         char txt[6];
         memset(txt, 0, sizeof(txt));
         sprintf(txt, "%x", num);
-        return txt;
+        string ret = txt;
+        UpperCaseStr(ret);
+        return ret;
     }
 };
 

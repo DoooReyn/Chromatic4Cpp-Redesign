@@ -112,6 +112,7 @@ public:
         frame.r = GetChannelDecNum(1);
         frame.g = GetChannelDecNum(2);
         frame.b = GetChannelDecNum(3);
+        frame.inputMode = eRGBAChannelInputModeInteger;
         return frame;
     }
     
@@ -121,6 +122,7 @@ public:
         frame.g = GetChannelDecNum(2);
         frame.b = GetChannelDecNum(3);
         frame.a = GetChannelDecNum(4);
+        frame.inputMode = eRGBAChannelInputModeInteger;
         return frame;
     }
     
