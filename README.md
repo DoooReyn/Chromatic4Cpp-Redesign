@@ -19,4 +19,5 @@
 **2017-02-25**
 - 删除 `Chromatic4Cpp` 命名空间及其中的各个命名空间，将其中各项拆分出来，独立成文件或类；
 - 简化流程，使用 `Chromatic4Cpp` 只需要 `include Chromatic4Cpp.hpp` 即可；
+- 删除 `ColorSpace` 命名空间，将其中各项拆分出来，独立成类；
 - 及其他...
