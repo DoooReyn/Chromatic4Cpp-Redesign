@@ -60,9 +60,9 @@ public:
     
 public:
     sRGBFrame(RGBAChannelInputMode mode = eRGBAChannelInputModeInteger) {
-        r = 0;
-        g = 0;
-        b = 0;
+        r = RGB_MIN;
+        g = RGB_MIN;
+        b = RGB_MIN;
         inputMode = mode;
     }
     
@@ -103,7 +103,7 @@ public:
         char txt[96];
         memset(txt, 0, sizeof(txt));
         sprintf(txt, "sRGB='%.03f,%.3f,%.03f' InputMode='%s'",
-                r/255.f,g/255.f,b/255.f,
+                r*1.f/RGB_MAX, g*1.f/RGB_MAX, b*1.f/RGB_MAX,
                 HelperUtils::GetChannelInputModeName(inputMode)
                 );
         PrintLine(txt);
@@ -126,10 +126,10 @@ public:
     
 public:
     sRGBAFrame(RGBAChannelInputMode mode = eRGBAChannelInputModeInteger) {
-        r = 0;
-        g = 0;
-        b = 0;
-        a = 255;
+        r = RGB_MIN;
+        g = RGB_MIN;
+        b = RGB_MIN;
+        a = RGB_MAX;
         inputMode = mode;
     }
     
@@ -137,7 +137,7 @@ public:
         r = _r;
         g = _g;
         b = _b;
-        a = 255;
+        a = RGB_MAX;
         inputMode = mode;
     }
     
@@ -182,7 +182,7 @@ public:
         char txt[96];
         memset(txt, 0, sizeof(txt));
         sprintf(txt, "sRGBA='%.03f,%.3f,%.03f,%.03f' InputMode='%s'",
-                r/255.f,g/255.f,b/255.f,a/255.f,
+                r*1.f/RGB_MAX, g*1.f/RGB_MAX, b*1.f/RGB_MAX, a*1.f/RGB_MAX,
                 HelperUtils::GetChannelInputModeName(inputMode)
                 );
         PrintLine(txt);
@@ -193,7 +193,7 @@ public:
         char txt[64];
         memset(txt, 0, sizeof(txt));
         sprintf(txt, "sRGBA='%d,%d,%d,%.03f' InputMode='%s'",
-                r,g,b,a/255.f,
+                r, g, b, a*1.f/RGB_MAX,
                 HelperUtils::GetChannelInputModeName(inputMode)
                 );
         PrintLine(txt);
@@ -201,6 +201,55 @@ public:
     }
 };
 
+
+struct CMYKFrame {
+public:
+    CMYKBit c, m, y, k;
+    constexpr static const CMYKBit CMYK_MIN = 0.000f;
+    constexpr static const CMYKBit CMYK_MAX = 1.000f;
+    
+public:
+    CMYKFrame() {
+        c = CMYK_MIN, m = CMYK_MIN, y = CMYK_MIN, k = CMYK_MIN;
+    }
+    CMYKFrame(CMYKBit _c, CMYKBit _m, CMYKBit _y, CMYKBit _k) {
+        Set(_c, _m, _y, _k);
+    }
+    
+public:
+    CMYKBit Cyan()      { return c; }
+    CMYKBit Magenta()   { return m; }
+    CMYKBit Yellow()    { return y; }
+    CMYKBit Black()     { return k; }
+    
+    CMYKFrame& Cyan(CMYKBit bit)    { c = CheckCMYKBit(bit); return *this; }
+    CMYKFrame& Magenta(CMYKBit bit) { m = CheckCMYKBit(bit); return *this; }
+    CMYKFrame& Yellow(CMYKBit bit)  { y = CheckCMYKBit(bit); return *this; }
+    CMYKFrame& Black(CMYKBit bit)   { k = CheckCMYKBit(bit); return *this; }
+    
+    CMYKFrame& Set(CMYKBit _c, CMYKBit _m, CMYKBit _y, CMYKBit _k) {
+        c = CheckCMYKBit(_c), m = CheckCMYKBit(_m), y = CheckCMYKBit(_y), k = CheckCMYKBit(_k);
+        return *this;
+    }
+    
+    CMYKFrame& Dump() {
+        char txt[32];
+        memset(txt, 0, sizeof(txt));
+        sprintf(txt, "CMYK:%.03f,%.03f,%.03f,%.03f", c, m, y, k);
+        PrintLine(txt);
+        return *this;
+    }
+    
+    CMYKFrame Clone() {
+        return CMYKFrame(c, m, y, k);
+    }
+
+    static CMYKBit CheckCMYKBit(CMYKBit bit) {
+        if(bit < CMYK_MIN) return CMYK_MIN;
+        if(bit > CMYK_MAX) return CMYK_MAX;
+        return bit;
+    }
+};
 
 
 #endif /* Chromatic4Cpp_DataFrame_hpp */

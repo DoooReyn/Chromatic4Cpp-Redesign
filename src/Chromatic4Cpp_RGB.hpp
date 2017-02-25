@@ -14,13 +14,14 @@
 #include "Chromatic4Cpp_DataFrame.hpp"
 #include "Chromatic4Cpp_HelperUtils.hpp"
 #include "Chromatic4Cpp_HEX.hpp"
+#include "Chromatic4Cpp_RGBA.hpp"
 
 class RGB {
 private:
     sRGBFrame _frame;
 public:
     RGB() {
-        sRGBFrame frame = sRGBFrame(0,0,0);
+        sRGBFrame frame = sRGBFrame(RGB_MIN, RGB_MIN, RGB_MIN);
         Set(frame);
     }
     
@@ -99,6 +100,10 @@ public:
         ret.append(HelperUtils::Number2Hex(_frame.Blue()));
         HelperUtils::AutoFillHexStr(ret, eChannelNumMode3, "0");
         return ret;
+    }
+    
+    RGBA AsRGBA() {
+        return RGBA(_frame.r, _frame.g, _frame.b, 255);
     }
     
 private:

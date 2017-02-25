@@ -9,15 +9,28 @@
 #ifndef Chromatic4Cpp_HelperUtils_hpp
 #define Chromatic4Cpp_HelperUtils_hpp
 
+#include <math.h>
+#include <stdlib.h>
+#include <time.h>
 #include <iostream>
 #include "Chromatic4Cpp_BaseTypes.hpp"
 using namespace std;
 
 /* Some functions to make Chromatic4Cpp useful and workable. */
-    
+
 template<class T> void PrintLine(T t) {
     cout << t << endl;
 }
+
+#define MIN(a,b) (a > b ? b : a)
+#define MAX(a,b) (a > b ? a : b)
+#define max03(f1, f2, f3) MAX(MAX(f1, f2), f3)
+#define min03(f1, f2, f3) MIN(MIN(f1, f2), f3)
+#define GET_ARRAY_LEN(array,len){len = (sizeof(array) / sizeof(array[0]));}
+#define setrandomseed()     srand((unsigned)time(NULL)+rand())
+#define randomAB(a,b)       (rand() % (b-a+1))+ a
+#define random01()          rand() / double(RAND_MAX)
+
 
 class HelperUtils {
 public:

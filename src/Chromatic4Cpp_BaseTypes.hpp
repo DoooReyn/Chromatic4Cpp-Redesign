@@ -39,12 +39,22 @@ typedef enum {
     eRGBAChannelInputModeAlphaFloat,
 } RGBAChannelInputMode;
 
-/* Macro definitions for base data type */
-#define CStr   const char*
-#define HexStr std::string
-#define HexBit unsigned char
-#define RGBit  unsigned char
-#define RGBitf float
+
+typedef const char*     CStr;
+typedef std::string     HexStr;
+typedef unsigned char   HexBit;
+typedef unsigned char   RGBit;
+typedef float           RGBitf;
+typedef float           CMYKBit;
+
+#define RGB_MAX     255
+#define RGB_MIN     0
+#define RGBA_MAX    255
+#define RGBA_MIN    0
+
+#define setrandomseed()     srand((unsigned)time(NULL)+rand())
+#define randomAB(a,b)       (rand() % (b-a+1))+ a
+#define random01()          rand() / double(RAND_MAX)
 
 
 #endif /* Chromatic4Cpp_BaseTypes_hpp */
