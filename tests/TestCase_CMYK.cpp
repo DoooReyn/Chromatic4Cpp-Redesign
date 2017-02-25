@@ -42,6 +42,7 @@ void TestCase3_CMYK_AsRGB() {
     PrintLine("================== 1-3 Convert between RGB and CMYK ==================");
     RGB rgb = CMYK(0.4,0.5,0.6,0.7).AsRGB().Dump(); // sRGB='45,38,30' InputMode='Integer'
     CMYK().FromRGB(rgb).Dump().AsRGB().Dump(); // CMYK:0.000,0.174,0.326,0.820 \ sRGB='46,38,31' InputMode='Integer'
+    CMYK().Random().Dump().AsRGB();
 }
 
 void TestCase_CMYK() {
