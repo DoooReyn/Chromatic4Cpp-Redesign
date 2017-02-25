@@ -25,6 +25,8 @@ void TestCase1_HEX_Constructor() {
     PrintLine("\t6. with hex frame");
     HexFrame hframe = HexFrame("FfCcDd", eChannelNumMode3, eHexCheckModeAutoConvert);
     HEX(hframe).Dump(); // Hex='#FFCCDD' CheckMode='AutoConvert' ChannelMode='3-Channel'
+    PrintLine("\t7. random");
+    HexFrame().Random().Dump(); // Hex='#881F8C' CheckMode='AutoConvert' ChannelMode='3-Channel'
 }
 
 void TestCase2_HEX_ChannelMode() {

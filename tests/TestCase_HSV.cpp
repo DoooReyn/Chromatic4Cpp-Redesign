@@ -17,6 +17,8 @@ void TestCase1_HSV_Constructor() {
     HSV().Dump(); // HSV:000,0.000,0.000
     PrintLine("\t2. with h,s,l bit value");
     HSV(240, 0.2, 0.5).Dump(); // HSV:240,0.200,0.500
+    PrintLine("\t3. Random");
+    HSV().Random().Dump(); // HSV:207,0.396,0.210
 }
 
 void TestCase2_HSV_Frame() {

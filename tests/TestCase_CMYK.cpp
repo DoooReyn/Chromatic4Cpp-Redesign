@@ -17,6 +17,8 @@ void TestCase1_CMYK_Constructor() {
     CMYK().Dump(); // CMYK:0.000,0.000,0.000,0.000
     PrintLine("\t2. with c,m,y,k bit value");
     CMYK(1.2,4.3,2,0.5).Dump(); // CMYK:1.000,1.000,1.000,0.500
+    PrintLine("\t3. Random");
+    CMYK().Random().Dump(); // CMYK:0.130,0.142,0.920,0.898
 }
 
 void TestCase2_CMYK_Frame() {

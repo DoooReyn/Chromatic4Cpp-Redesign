@@ -25,6 +25,8 @@ void TestCase1_sRGB_Constructor() {
     RGB(frame).Dump(); // sRGB='77,88,99' InputMode='Integer'
     PrintLine("\t6. RGBAChannelInputMode is one argument, but its value is eRGBAChannelInputModeInteger as default");
     RGB(SANDYBROWN, eRGBAChannelInputModeInteger).Dump(); // sRGB='244,164,96' InputMode='Integer'
+    PrintLine("\t7. Random");
+    RGB().Random().Dump(); // sRGB='162,202,41' InputMode='Integer'
 }
 
 void TestCase2_sRGB_InputMode() {
@@ -49,7 +51,7 @@ void TestCase3_sRGB_sFrame() {
     case0.Get().Dump(); // sRGB='120,120,120' InputMode='Integer'
     PrintLine("\t3. Set sRGBFrame data with R,G,B vector:");
     case0.Red(97).Green(98).Blue(99).Dump(); // sRGB='97,98,99' InputMode='Integer'
-    PrintLine("\t3. Get R,G,B vector:");
+    PrintLine("\t4. Get R,G,B vector:");
     char txt[32];
     memset(txt, 0, sizeof(txt));
     sprintf(txt, "R:%03d G:%03d B:%03d", case0.Red(), case0.Green(), case0.Blue());

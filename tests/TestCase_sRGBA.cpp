@@ -24,6 +24,8 @@ void TestCase1_sRGBA_Constructor() {
     PrintLine("\t5. with sRGBAFrame data");
     sRGBAFrame frame = sRGBAFrame(77,88,99,111);
     RGBA(frame).Dump(); // sRGBA='77,88,99,111' InputMode='Integer'
+    PrintLine("\t7. Random");
+    RGBA().Random().Dump(); // sRGBA='187,39,172,167' InputMode='Integer'
 }
 
 void TestCase2_sRGBA_InputMode() {

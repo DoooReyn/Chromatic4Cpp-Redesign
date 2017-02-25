@@ -17,6 +17,8 @@ void TestCase1_HSL_Constructor() {
     HSL().Dump(); // HSL:000,0.000,0.000
     PrintLine("\t2. with h,s,l bit value");
     HSL(240, 0.2, 0.5).Dump(); // HSL:240,0.200,0.500
+    PrintLine("\t3. Random");
+    HSL().Random().Dump(); // HSL:196,0.401,0.635
 }
 
 void TestCase2_HSL_Frame() {
