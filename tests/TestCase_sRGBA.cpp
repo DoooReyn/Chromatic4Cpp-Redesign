@@ -72,7 +72,7 @@ void TestCase4_sRGBA_AsHEX() {
 
 void TestCases_sRGBA() {
     PrintLine("\n");
-    PrintLine("******************  RGBA Class TestCases ****************** ");
+    PrintLine("****************** RGBA Class TestCases ****************** ");
     TestCase1_sRGBA_Constructor();
     TestCase2_sRGBA_InputMode();
     TestCase3_sRGBA_sFrame();
