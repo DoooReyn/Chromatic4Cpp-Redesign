@@ -9,8 +9,8 @@
 #ifndef Chromatic4Cpp_HelperUtils_hpp
 #define Chromatic4Cpp_HelperUtils_hpp
 
-#import <iostream>
-#import "Chromatic4Cpp_BaseTypes.hpp"
+#include <iostream>
+#include "Chromatic4Cpp_BaseTypes.hpp"
 using namespace std;
 
 /* Some functions to make Chromatic4Cpp useful and workable. */

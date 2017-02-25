@@ -9,9 +9,9 @@
 #ifndef Chromatic4Cpp_DataFrame_hpp
 #define Chromatic4Cpp_DataFrame_hpp
 
-#import "Chromatic4Cpp_HexColor.hpp"
-#import "Chromatic4Cpp_BaseTypes.hpp"
-#import "Chromatic4Cpp_HelperUtils.hpp"
+#include "Chromatic4Cpp_HexColor.hpp"
+#include "Chromatic4Cpp_BaseTypes.hpp"
+#include "Chromatic4Cpp_HelperUtils.hpp"
 
 /* Some data structions definition, like Hex, RGB, RGBA, and so on. */
     

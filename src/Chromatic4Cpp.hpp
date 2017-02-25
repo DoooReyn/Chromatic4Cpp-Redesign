@@ -14,7 +14,8 @@
 #include "Chromatic4Cpp_HexColor.hpp"
 #include "Chromatic4Cpp_HelperUtils.hpp"
 #include "Chromatic4Cpp_DataFrame.hpp"
-#include "Chromatic4Cpp_ColorSpace.hpp"
+#include "Chromatic4Cpp_HEX.hpp"
+#include "Chromatic4Cpp_RGB.hpp"
 using namespace std;
 using namespace HexColor;
 

@@ -9,7 +9,9 @@
 #ifndef Chromatic4Cpp_HexColor_hpp
 #define Chromatic4Cpp_HexColor_hpp
 
-#import "Chromatic4Cpp_BaseTypes.hpp"
+#include <iostream>
+#include "Chromatic4Cpp_BaseTypes.hpp"
+using namespace std;
 
 /* Hex colors definition as below */
 namespace HexColor {
