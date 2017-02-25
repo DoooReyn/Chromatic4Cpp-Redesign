@@ -15,3 +15,8 @@
 - 增加 `Chromatic4Cpp` 色彩空间的文档说明和部分注释；
 - 新增 `RGB` 类，用于处理 `RGB` 数据；
 - 新增 `RGB` 类构造部分的测试用例，详见[tests/TestCase_sRGB.cpp](https://github.com/DoooReyn/Chromatic4Cpp-Redesign/blob/master/tests/TestCase_sRGB.cpp)；
+
+**2017-02-25**
+- 删除 `Chromatic4Cpp` 命名空间及其中的各个命名空间，将其中各项拆分出来，独立成文件或类；
+- 简化流程，使用 `Chromatic4Cpp` 只需要 `include Chromatic4Cpp.hpp` 即可；
+- 及其他...
