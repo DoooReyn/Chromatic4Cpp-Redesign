@@ -243,6 +243,15 @@ public:
     CMYKFrame Clone() {
         return CMYKFrame(c, m, y, k);
     }
+    
+    CMYKFrame& Random() {
+        setrandomseed();
+        c = random01();
+        m = random01();
+        y = random01();
+        k = random01();
+        return *this;
+    }
 
     static CMYKBit CheckCMYKBit(CMYKBit bit) {
         if(bit < CMYK_MIN) return CMYK_MIN;
@@ -251,5 +260,73 @@ public:
     }
 };
 
+
+struct HSLFrame {
+public:
+    HueBit h;
+    HSLBit s, l;
+    const static HueBit HUE_MIN = 0;
+    const static HueBit HUE_MAX = 359;
+    static constexpr HSLBit HSL_MIN = 0.000f;
+    static constexpr HSLBit HSL_MAX = 1.000f;
+    
+public:
+    HSLFrame() {
+        h = HUE_MIN;
+        s = l = HSL_MIN;
+    }
+    
+    HSLFrame(HueBit _h, HSLBit _s, HSLBit _l) {
+        Set(_h, _s, _l);
+    }
+    
+public:
+    HueBit Hue()        { return h; }
+    HSLBit Saturation() { return s; }
+    HSLBit Lightness()  { return l; }
+    
+    HSLFrame& Hue(HueBit bit)        { h = CheckHueBit(bit); return *this; }
+    HSLFrame& Saturation(HSLBit bit) { s = CheckHSLBit(bit); return *this; }
+    HSLFrame& Lightness(HSLBit bit)  { l = CheckHSLBit(bit); return *this; }
+    
+    HSLFrame& Set(HueBit _h, HSLBit _s, HSLBit _l) {
+        h = CheckHueBit(_h);
+        s = CheckHSLBit(_s);
+        l = CheckHSLBit(_l);
+        return *this;
+    }
+    
+    HSLFrame& Dump() {
+        char txt[32];
+        memset(txt, 0, sizeof(txt));
+        sprintf(txt, "HSL:%03d,%.03f,%.03f", h, s, l);
+        PrintLine(txt);
+        return *this;
+    }
+    
+    HSLFrame Clone() {
+        return HSLFrame(h, s, l);
+    }
+    
+    HSLFrame& Random() {
+        setrandomseed();
+        h = randomAB(HUE_MIN, HUE_MAX);
+        s = random01();
+        l = random01();
+        return *this;
+    }
+    
+    static HueBit CheckHueBit(HueBit bit) {
+        if(bit < HUE_MIN) return HUE_MIN;
+        if(bit > HUE_MAX) return HUE_MAX;
+        return bit;
+    }
+    
+    static HSLBit CheckHSLBit(HSLBit bit) {
+        if(bit < HSL_MIN) return HSL_MIN;
+        if(bit > HSL_MAX) return HSL_MAX;
+        return bit;
+    }
+};
 
 #endif /* Chromatic4Cpp_DataFrame_hpp */

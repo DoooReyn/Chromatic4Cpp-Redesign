@@ -72,11 +72,7 @@ public:
     }
     
     CMYK& Random() {
-        setrandomseed();
-        _frame.c = random01();
-        _frame.m = random01();
-        _frame.y = random01();
-        _frame.k = random01();
+        _frame.Random();
         return *this;
     }
 };
