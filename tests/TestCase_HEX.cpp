@@ -6,15 +6,7 @@
 //  Copyright © 2017年 Reyn-Mac. All rights reserved.
 //
 
-#include "TestCase_HEX.hpp"
-#include "Chromatic4Cpp.hpp"
-#include <iostream>
-using namespace Chromatic4Cpp;
-using namespace HexColor;
-using namespace ColorSpace;
-using namespace HelperUtils;
-using namespace std;
-
+#import "TestCase_HEX.hpp"
 
 void TestCase1_HEX_Constructor() {
     PrintLine("\n");

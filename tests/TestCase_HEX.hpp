@@ -9,6 +9,8 @@
 #ifndef TestCase_HEX_hpp
 #define TestCase_HEX_hpp
 
+#include "Chromatic4Cpp.hpp"
+
 void TestCase1_HEX_Constructor();
 void TestCase2_HEX_ChannelMode();
 void TestCase3_HEX_CheckMode();
