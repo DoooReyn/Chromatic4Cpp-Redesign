@@ -5,8 +5,8 @@
 //  Created by Reyn-Mac on 2017/2/23.
 //  Copyright © 2017年 Reyn-Mac. All rights reserved.
 //
-#import "Chromatic4Cpp.hpp"
-#import "TestCase_sRGB.hpp"
+#include "Chromatic4Cpp.hpp"
+#include "TestCase_sRGB.hpp"
 
 void TestCase1_sRGB_Constructor() {
     PrintLine("\n");

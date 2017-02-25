@@ -6,7 +6,7 @@
 //  Copyright © 2017年 Reyn-Mac. All rights reserved.
 //
 
-#import "TestCase_HEX.hpp"
+#include "TestCase_HEX.hpp"
 
 void TestCase1_HEX_Constructor() {
     PrintLine("\n");
