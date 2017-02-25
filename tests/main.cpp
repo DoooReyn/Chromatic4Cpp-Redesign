@@ -11,6 +11,7 @@
 #include "TestCase_sRGBA.hpp"
 #include "TestCase_CMYK.hpp"
 #include "TestCase_HSL.hpp"
+#include "TestCase_HSV.hpp"
 
 int main(int argc, const char * argv[]) {
     TestCases_HEX();
@@ -18,4 +19,5 @@ int main(int argc, const char * argv[]) {
     TestCases_sRGBA();
     TestCase_CMYK();
     TestCase_HSL();
+    TestCase_HSV();
 }
