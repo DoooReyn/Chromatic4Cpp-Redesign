@@ -47,4 +47,30 @@
 using namespace std;
 using namespace HexColor;
 
+class Color {
+public:
+    // As RGB
+    static RGB AsRGB(HEX hex) {
+        sRGBFrame frame = hex.RGBFrame();
+        return RGB().Set(frame);
+    }
+    
+    static RGB AsRGB(RGBA rgba) {
+        sRGBAFrame frame = rgba.Get();
+        return RGB(frame.r, frame.g, frame.b, frame.inputMode);
+    }
+    
+    static RGB AsRGB(CMYK cmyk) {
+        return cmyk.AsRGB();
+    }
+    
+    static RGB AsRGB(HSL hsl) {
+        return hsl.AsRGB();
+    }
+    
+    static RGB AsRGB(HSV hsv) {
+        return hsv.AsRGB();
+    }
+};
+
 #endif /* Chromatic4Cpp_hpp */

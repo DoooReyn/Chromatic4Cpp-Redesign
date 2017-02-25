@@ -107,6 +107,11 @@ public:
         return (int)HelperUtils::Hex2Number(_hexFrame.hex.substr((channel-1)*2, 2));
     }
     
+    HEX& Random() {
+        _hexFrame.Random();
+        return *this;
+    }
+    
     sRGBFrame RGBFrame() {
         sRGBFrame frame;
         frame.r = GetChannelDecNum(1);
