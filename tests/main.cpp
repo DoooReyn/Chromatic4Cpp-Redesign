@@ -11,6 +11,6 @@
 #include "TestCase_sRGB.hpp"
 
 int main(int argc, const char * argv[]) {
-//    TestCases_HEX();
+    TestCases_HEX();
     TestCases_sRGB();
 }

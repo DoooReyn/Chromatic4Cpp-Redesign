@@ -27,7 +27,8 @@ void TestCase1_sRGB_Constructor() {
     PrintLine("\t4. with HEX class");
     RGB(HEX("F19oo20488", eHexCheckModeSkipInvalid)).Dump(); // sRGB='241,146,4' InputMode='Integer'
     PrintLine("\t5. with sRGBFrame data");
-    RGB(sRGBFrame(77,88,99)).Dump(); // sRGB='77,88,99' InputMode='Integer'
+    sRGBFrame frame = sRGBFrame(77,88,99);
+    RGB(frame).Dump(); // sRGB='77,88,99' InputMode='Integer'
     PrintLine("\t6. RGBAChannelInputMode is one argument, but its value is eRGBAChannelInputModeInteger as default");
     RGB(SANDYBROWN, eRGBAChannelInputModeInteger).Dump(); // sRGB='244,164,96' InputMode='Integer'
 }
@@ -46,22 +47,33 @@ void TestCase2_sRGB_InputMode() {
 }
 
 void TestCase3_sRGB_sFrame() {
-    // sRGB='221,160,221' InputMode='Integer'
-    // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
+    PrintLine("\n");
+    PrintLine("================== 1-3 RGB Getter/Setter ==================");
+    PrintLine("\t1. Set RGB data :");
+    RGB case0 = RGB().Set(120,120,120).Dump(); // sRGB='120,120,120' InputMode='Integer'
+    PrintLine("\t2. Get sRGBFrame data :");
+    case0.Get().Dump(); // sRGB='120,120,120' InputMode='Integer'
+    PrintLine("\t3. Set sRGBFrame data with R,G,B vector:");
+    case0.Red(97).Green(98).Blue(99).Dump(); // sRGB='97,98,99' InputMode='Integer'
+    PrintLine("\t3. Get R,G,B vector:");
+    char txt[32];
+    memset(txt, 0, sizeof(txt));
+    sprintf(txt, "R:%03d G:%03d B:%03d", case0.Red(), case0.Green(), case0.Blue());
+    PrintLine(txt); // R:097 G:098 B:099
 }
 
 
 void TestCase4_sRGB_AsHEX() {
     PrintLine("\n");
-    PrintLine("================== 1-4 RGB As Hex ==================");
-    PrintLine("RGB(PLUM)'s rgb data :");
+    PrintLine("================== 1-4 RGB As HexStr && HEX ==================");
+    PrintLine("\t1. RGB(PLUM)'s rgb data :");
     RGB rgb = RGB(PLUM).Dump(); // sRGB='221,160,221' InputMode='Integer'
-    PrintLine("RGB(PLUM)'s hex string :");
-    const HexStr hexStr = rgb.GetHexStr();
+    PrintLine("\t2. RGB(PLUM)'s hex string :");
+    const HexStr hexStr = rgb.HexString();
     PrintLine(hexStr); // sRGB='221,160,221' InputMode='Integer'
-    PrintLine("RGB(PLUM) as HEX class :");
+    PrintLine("\t3. RGB(PLUM) as HEX class :");
     rgb.Dump().AsHEX().Dump(); // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
-    PrintLine("Use HexStr to generate a HEX class :");
+    PrintLine("\t4. Use HexStr to generate a HEX class :");
     HEX(hexStr).Dump(); // Hex='#DDA0DD' CheckMode='AutoConvert' ChannelMode='3-Channel'
 }
 
