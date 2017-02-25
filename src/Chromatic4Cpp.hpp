@@ -309,15 +309,16 @@ namespace Chromatic4Cpp {
             RGBAChannelInputMode inputMode;
             
             sRGBFrame()
-            { r = 0; g = 0; b = 0; inputMode=eRGBAChannelInputModeInteger; }
-            sRGBFrame(RGBit _r, RGBit _g, RGBit _b, RGBAChannelInputMode _input=eRGBAChannelInputModeInteger)
-            { r = _r; g = _g; b = _b; CheckInputMode(_input); }
+            { r = 0; g = 0; b = 0; inputMode = eRGBAChannelInputModeInteger; }
+            sRGBFrame(RGBit _r, RGBit _g, RGBit _b)
+            { r = _r; g = _g; b = _b; inputMode = eRGBAChannelInputModeInteger; } // CheckInputMode(_input);
             int Red()   { return r; }
             int Green() { return g; }
             int Blue()  { return b; }
             sRGBFrame Red(RGBit _r)   { r = _r; return *this; }
             sRGBFrame Green(RGBit _g) { g = _g; return *this; }
             sRGBFrame Blue(RGBit _b)  { b = _b; return *this; }
+            sRGBFrame Clone() { return sRGBFrame(r,g,b); }
             sRGBFrame Dump() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
@@ -336,7 +337,6 @@ namespace Chromatic4Cpp {
                 PrintLine(txt);
                 return *this;
             }
-            
             void CheckInputMode(RGBAChannelInputMode mode) {
                 if(inputMode == eRGBAChannelInputModeAlphaFloat) {
                     PrintLine("!!!warning: 'AlphaFloat Mode' is not compatible for RGB, so it will not work.");
@@ -444,24 +444,38 @@ namespace Chromatic4Cpp {
         
         class RGB {
         private:
+            static RGB* _instance;
+            HexStr _hex;
             sRGBFrame _frame;
         public:
+            static RGB& Instance() {
+                if(_instance == NULL) {
+                    _instance = new RGB;
+                }
+                return *_instance;
+            };
             RGB();
             RGB(RGBit, RGBit, RGBit, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
             RGB(HexStr, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
             RGB(HEX, RGBAChannelInputMode mode = eRGBAChannelInputModeInteger);
-            RGB(sRGBFrame);
+            RGB(sRGBFrame&);
             
-            RGB Set(sRGBFrame);
-            RGB Set(RGBit, RGBit, RGBit);
-            RGB Dump();
+        public:
+            int Red()   { return _frame.Red(); }
+            int Green() { return _frame.Green(); }
+            int Blue()  { return _frame.Blue(); }
+            
+            RGB& Set(sRGBFrame&);
+            RGB& Set(RGBit, RGBit, RGBit);
+            sRGBFrame Get() { return _frame.Clone(); }
+            RGB& Dump();
             RGBAChannelInputMode GetChannelInputMode();
-            RGB SetChannelInputMode(RGBAChannelInputMode);
+            RGB& SetChannelInputMode(RGBAChannelInputMode);
             
             HEX AsHEX();
-            const HexStr GetHexStr();
+            const HexStr HexString();
         private:
-            void _Set(sRGBFrame);
+            void _Set(sRGBFrame&);
         };
         
         

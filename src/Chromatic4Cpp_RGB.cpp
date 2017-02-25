@@ -15,12 +15,16 @@ using namespace DataFrame;
 using namespace HexColor;
 using namespace BaseTypes;
 
+RGB* RGB::_instance = NULL;
+
 RGB::RGB() {
-    Set(sRGBFrame(0,0,0,eRGBAChannelInputModeInteger));
+    sRGBFrame frame = sRGBFrame(0,0,0);
+    Set(frame);
 }
 
 RGB::RGB(RGBit r, RGBit g, RGBit b, RGBAChannelInputMode mode) {
-    Set(sRGBFrame(r,g,b,mode));
+    sRGBFrame frame = sRGBFrame(r,g,b);
+    Set(frame);
 }
 
 RGB::RGB(HEX hex, RGBAChannelInputMode mode) {
@@ -29,7 +33,7 @@ RGB::RGB(HEX hex, RGBAChannelInputMode mode) {
     Set(frame);
 }
 
-RGB::RGB(sRGBFrame frame) {
+RGB::RGB(sRGBFrame& frame) {
     Set(frame);
 }
 
@@ -39,21 +43,22 @@ RGB::RGB(HexStr hex, RGBAChannelInputMode mode) {
     Set(frame);
 }
 
-RGB RGB::Set(sRGBFrame frame) {
+RGB& RGB::Set(sRGBFrame& frame) {
     _Set(frame);
     return *this;
 }
 
-RGB RGB::Set(RGBit r, RGBit g, RGBit b) {
-    return Set(sRGBFrame(r,g,b));
+RGB& RGB::Set(RGBit r, RGBit g, RGBit b) {
+    sRGBFrame frame = sRGBFrame(r,g,b);
+    return Set(frame);
 }
 
-void RGB::_Set(sRGBFrame frame) {
+void RGB::_Set(sRGBFrame& frame) {
     frame.CheckInputMode(frame.inputMode);
     _frame = frame;
 }
 
-RGB RGB::Dump() {
+RGB& RGB::Dump() {
     if(_frame.inputMode == eRGBAChannelInputModeFloat)
         _frame.DumpAsFloat();
     else
@@ -61,7 +66,7 @@ RGB RGB::Dump() {
     return *this;
 }
 
-RGB RGB::SetChannelInputMode(RGBAChannelInputMode mode) {
+RGB& RGB::SetChannelInputMode(RGBAChannelInputMode mode) {
     _frame.CheckInputMode(mode);
     return *this;
 }
@@ -70,7 +75,7 @@ RGBAChannelInputMode RGB::GetChannelInputMode() {
     return _frame.inputMode;
 }
 
-const HexStr RGB::GetHexStr() {
+const HexStr RGB::HexString() {
     HexStr ret;
     ret.clear();
     ret.append(Number2Hex(_frame.Red()));
@@ -80,5 +85,5 @@ const HexStr RGB::GetHexStr() {
 }
 
 HEX RGB::AsHEX() {
-    return HEX(GetHexStr());
+    return HEX(HexString());
 }
