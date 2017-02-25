@@ -21,3 +21,9 @@
 - 简化流程，使用 `Chromatic4Cpp` 只需要 `include Chromatic4Cpp.hpp` 即可；
 - 删除 `ColorSpace` 命名空间，将其中各项拆分出来，独立成类；
 - 及其他...
+
+**2017-02-26**
+- 增加 `CMYK` 色彩空间类;
+- 增加 `CMYK` 色彩空间测试用例;
+- 提供 `CMYK` 与 `RGB` 之间的转换接口;
+- ...
