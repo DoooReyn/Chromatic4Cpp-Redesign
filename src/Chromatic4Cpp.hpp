@@ -27,19 +27,21 @@ using namespace std;
  * - HelperUtils
  * - DataFrame
  *      - HexFrame      // completed 90%
- *      - sRGBFrame     // completed 80%
+ *      - sRGBFrame     // completed 90%
  *      - sRGBAFrame    // completed 80%
  *      - ...           // on plan
  * - ColorSpace
  *      - HEX   // completed 90% ...
- *      - RGB   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
- *      - RGBA  // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
- *      - CMYK  // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
- *      - HSL   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
- *      - HSV   // refer to [chromatic4cpp](https://github.com/DoooReyn/Chromatic4cpp)
+ *      - RGB   // completed 90% ...
+ *      - RGBA  // on plan
+ *      - CMYK  // on plan
+ *      - HSL   // on plan
+ *      - HSV   // on plan
  *      - HSB   // on plan
  *      - YUV   // on plan
  *      - LAB   // on plan
+ * 
+ * [Reference Link](https://github.com/DoooReyn/Chromatic4cpp)
  ****************************************************************************************************************************************/
 
 namespace Chromatic4Cpp {
@@ -47,9 +49,9 @@ namespace Chromatic4Cpp {
     /* Base data types definition */
     namespace BaseTypes {
         typedef enum {
-            eCS_HEX,    //基本完成
-            eCS_RGB,    //计划中
-            eCS_RGBA,   //计划中
+            eCS_HEX,    // completed 90%
+            eCS_RGB,    // completed 90%
+            eCS_RGBA,   // completed 70%
             eCS_CMYK,
             eCS_HSL,
             eCS_HSV,
@@ -288,7 +290,7 @@ namespace Chromatic4Cpp {
                 return HexFrame(hex, channelMode, checkMode);
             }
             
-            HexFrame Dump() {
+            HexFrame& Dump() {
                 char txt[80];
                 memset(txt, 0, sizeof(txt));
                 string sub = hex.substr(0, hex.size());
@@ -315,11 +317,11 @@ namespace Chromatic4Cpp {
             int Red()   { return r; }
             int Green() { return g; }
             int Blue()  { return b; }
-            sRGBFrame Red(RGBit _r)   { r = _r; return *this; }
-            sRGBFrame Green(RGBit _g) { g = _g; return *this; }
-            sRGBFrame Blue(RGBit _b)  { b = _b; return *this; }
+            sRGBFrame& Red(RGBit _r)   { r = _r; return *this; }
+            sRGBFrame& Green(RGBit _g) { g = _g; return *this; }
+            sRGBFrame& Blue(RGBit _b)  { b = _b; return *this; }
             sRGBFrame Clone() { return sRGBFrame(r,g,b); }
-            sRGBFrame Dump() {
+            sRGBFrame& Dump() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
                 sprintf(txt, "sRGB='%d,%d,%d' InputMode='%s'",
@@ -328,7 +330,7 @@ namespace Chromatic4Cpp {
                 PrintLine(txt);
                 return *this;
             }
-            sRGBFrame DumpAsFloat() {
+            sRGBFrame& DumpAsFloat() {
                 char txt[96];
                 memset(txt, 0, sizeof(txt));
                 sprintf(txt, "sRGB='%.03f,%.3f,%.03f' InputMode='%s'",
@@ -366,11 +368,11 @@ namespace Chromatic4Cpp {
             int Green() { return g; }
             int Blue()  { return b; }
             int Alpha() { return a; }
-            sRGBAFrame Red(RGBit _r)   { r = _r; return *this; }
-            sRGBAFrame Green(RGBit _g) { g = _g; return *this; }
-            sRGBAFrame Blue(RGBit _b)  { b = _b; return *this; }
-            sRGBAFrame Alpha(RGBit _a) { a = _a; return *this; }
-            sRGBAFrame Dump() {
+            sRGBAFrame& Red(RGBit _r)   { r = _r; return *this; }
+            sRGBAFrame& Green(RGBit _g) { g = _g; return *this; }
+            sRGBAFrame& Blue(RGBit _b)  { b = _b; return *this; }
+            sRGBAFrame& Alpha(RGBit _a) { a = _a; return *this; }
+            sRGBAFrame& Dump() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
                 sprintf(txt, "sRGBA='%d,%d,%d,%d' InputMode='%s'",
@@ -379,7 +381,7 @@ namespace Chromatic4Cpp {
                 PrintLine(txt);
                 return *this;
             }
-            sRGBFrame DumpAsFloat() {
+            sRGBFrame& DumpAsFloat() {
                 char txt[96];
                 memset(txt, 0, sizeof(txt));
                 sprintf(txt, "sRGBA='%.03f,%.3f,%.03f,%.03f' InputMode='%s'",
@@ -388,7 +390,7 @@ namespace Chromatic4Cpp {
                 PrintLine(txt);
                 return *this;
             }
-            sRGBFrame DumpAlphaFloat() {
+            sRGBFrame& DumpAlphaFloat() {
                 char txt[64];
                 memset(txt, 0, sizeof(txt));
                 sprintf(txt, "sRGBA='%d,%d,%d,%.03f' InputMode='%s'",
@@ -420,18 +422,18 @@ namespace Chromatic4Cpp {
             HEX(HexStr, ChannelNumMode, HexCheckMode);
             HEX(HexFrame& other);
             
-            HEX Dump();
+            HEX& Dump();
             
             HexStr Get();
-            HEX Set(HexStr str);
+            HEX& Set(HexStr str);
             HexFrame GetHexFrame();
-            HEX SetHexFrame(HexFrame& other);
+            HEX& SetHexFrame(HexFrame& other);
 
             ChannelNumMode GetChannelMode();
-            HEX SetChannelMode(ChannelNumMode mode);
+            HEX& SetChannelMode(ChannelNumMode mode);
             
             HexCheckMode GetCheckMode();
-            HEX SetCheckMode(HexCheckMode mode);
+            HEX& SetCheckMode(HexCheckMode mode);
             
             int GetChannelDecNum(HexBit channel);
             sRGBFrame RGBFrame();
@@ -464,6 +466,9 @@ namespace Chromatic4Cpp {
             int Red()   { return _frame.Red(); }
             int Green() { return _frame.Green(); }
             int Blue()  { return _frame.Blue(); }
+            RGB& Red(RGBit r)   { _frame.Red(r); return *this; }
+            RGB& Green(RGBit g) { _frame.Green(g); return *this; }
+            RGB& Blue(RGBit b)  { _frame.Blue(b); return *this; }
             
             RGB& Set(sRGBFrame&);
             RGB& Set(RGBit, RGBit, RGBit);

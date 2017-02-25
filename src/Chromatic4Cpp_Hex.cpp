@@ -47,7 +47,7 @@ HEX::HEX(HexFrame& other) {
     SetHexFrame(other);
 }
 
-HEX HEX::Dump() {
+HEX& HEX::Dump() {
     _hexFrame.Dump();
     return *this;
 }
@@ -56,7 +56,7 @@ HexStr HEX::Get() {
     return _hexFrame.hex.substr(0, _hexFrame.hex.size());
 }
 
-HEX HEX::Set(HexStr hex) {
+HEX& HEX::Set(HexStr hex) {
     switch (_hexFrame.checkMode) {
         case eHexCheckModeAutoConvert:
             _Set(AutoConvertHexStr(hex));
@@ -76,7 +76,7 @@ HexFrame HEX::GetHexFrame() {
     return _hexFrame.Clone();
 }
 
-HEX HEX::SetHexFrame(HexFrame& other) {
+HEX& HEX::SetHexFrame(HexFrame& other) {
     _hexFrame = other;
     Set(_hexFrame.hex);
     return *this;
@@ -91,7 +91,7 @@ ChannelNumMode HEX::GetChannelMode() {
     return _hexFrame.channelMode;
 }
 
-HEX HEX::SetChannelMode(ChannelNumMode mode) {
+HEX& HEX::SetChannelMode(ChannelNumMode mode) {
     _hexFrame.channelMode = mode;
     Set(_hexFrame.hex);
     return *this;
@@ -101,7 +101,7 @@ HexCheckMode HEX::GetCheckMode() {
     return _hexFrame.checkMode;
 }
 
-HEX HEX::SetCheckMode(HexCheckMode mode) {
+HEX& HEX::SetCheckMode(HexCheckMode mode) {
     _hexFrame.checkMode = mode;
     Set(_hexFrame.hex);
     return *this;
